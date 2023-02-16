@@ -98,21 +98,22 @@ export async function UserNameRoutines(){
 }
 
 
-export async function getActivityIdR(activitieId){
-    try{
+// export async function getActivityIdR(activitieId){
+//     try{
    
-        const response = await fetch(`http://fitnesstrac-kr.herokuapp.com/api/activities/${activitieId}`,{
-            headers:{
-                'Content-Type': 'application/json'
-            },
-        }).then(response => response.json()).then(result =>{
-            console.log(result)
-        })
+//         const response = await fetch(`http://fitnesstrac-kr.herokuapp.com/api/activities/${activitieId}/routines`,{
+//             headers:{
+//                 'Content-Type': 'application/json'
+//             },
+//         }).then(response => response.json()).then(result =>{
+//             console.log(result)
+            
+//         })
 
-    }catch(error){
-        throw Error(error)
-    }
-}
+//     }catch(error){
+//         throw Error(error)
+//     }
+// }
 
 export async function patchActivitieByID(props){
     try{

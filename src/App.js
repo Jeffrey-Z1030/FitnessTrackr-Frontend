@@ -10,7 +10,7 @@ import GetRoutines from './Components/getAllRoutines';
 import { Route, BrowserRouter, Link, Routes } from 'react-router-dom';
 import PostActivitie from './Components/postActivities';
 import PostRoutines from './Components/postRoutines';
-import ActIdRoutine from './Components/activityIdByRoutine';
+// import ActIdRoutine from './Components/activityIdByRoutine';
 
 const replyToken ='test_token'
 
