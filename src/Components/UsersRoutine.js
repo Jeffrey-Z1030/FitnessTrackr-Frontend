@@ -1,15 +1,15 @@
-import { UserNameRoutines } from "../API/AccountReq";
+import { getRoutinesByUsername } from "../API/UsersReq";
 
 
-function GetUsersRoutines(){
-    return(
-        <form onSubmit={async(event)=>{
+function GetUsersRoutines() {
+    return (
+        <form onSubmit={async (event) => {
             event.preventDefault();
 
-            try{
-                const response = await UserNameRoutines()
+            try {
+                const response = await getRoutinesByUsername()
 
-            }catch(error){
+            } catch (error) {
                 throw Error(error)
             }
         }}>
