@@ -10,7 +10,7 @@ import GetRoutines from './Components/getAllRoutines';
 import { Route, BrowserRouter, Link, Routes } from 'react-router-dom';
 import PostActivitie from './Components/postActivities';
 import PostRoutines from './Components/postRoutines';
-// import ActIdRoutine from './Components/activityIdByRoutine';
+import RoutinePageById from './Components/RoutinesByIdPage';
 
 const replyToken ='test_token'
 
@@ -53,6 +53,7 @@ function App() {
           <Route path='/postroutines' element={<PostRoutines/>}/>
           <Route path='/userme' element={<UserMe/>}/>
           <Route path='/getusersroutines' element={<GetUsersRoutines/>}/>
+          <Route path='/routinepagebyactid' element={<RoutinePageById/>}/>
 
           </Routes>
 

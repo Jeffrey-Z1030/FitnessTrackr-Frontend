@@ -3,6 +3,7 @@ import UserMe from "../Components/UserMe";
 export const BASEURL= 'http://fitnesstrac-kr.herokuapp.com/api'
 export const STORAGE_KEY = 'replyToken'
 export const USER_ID = 'userId'
+export const LoggedUser = 'SignedInUser'
 
 
 
@@ -68,6 +69,7 @@ export async function LoginAccount(props){
         console.log(replyToken)
         const userId = json.user.id 
         localStorage.setItem(`${USER_ID}`,userId)
+        localStorage.setItem(`${LoggedUser}`,json.user.username)
         alert('Logged in successful!')
 
 
@@ -84,14 +86,14 @@ export async function LoginAccount(props){
 
 export async function UserNameRoutines(){
     try{
-        const username = localStorage.getItem('signedInUser')
+        const username = localStorage.getItem('SignedInUser')
         const response = await fetch(`http://fitnesstrac-kr.herokuapp.com/api/users/${username}/routines`,{
             headers:{
                 'Content-Type' : 'application/json',
             }
-        }).then(response => response.json()).then(result =>{
-            console.log(result)
         })
+        const json = await response.json();
+        console.log(json)
     }catch(error){
         throw Error("Failed to get user's Routines", error)
     }

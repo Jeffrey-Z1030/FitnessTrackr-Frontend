@@ -17,6 +17,7 @@ async function getRoutines(){
         }).then(response => response.json()).then(result => {
             console.log(result)
             SetRoutines(result)
+
         })
     }catch(error){
         throw Error(error)
