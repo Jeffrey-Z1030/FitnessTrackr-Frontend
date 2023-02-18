@@ -14,7 +14,7 @@ function DropDown(){
     return (
         <>
         <div className="dropdown">
-            <div className="dropdown-menu" onMouseEnter={showDropDown} onMouseLeave={hideDropDown}>
+            <div className="dropdown-menu" onClick={showDropDown} onMouseLeave={hideDropDown}>
                 DropDown
                 {isActive ?(<ul onMouseEnter={showDropDown}>
                     <li>1</li>
