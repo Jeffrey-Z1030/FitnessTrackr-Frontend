@@ -1,6 +1,7 @@
 import { getRoutines, USER_ID } from "../API/AccountReq";
 import { useState } from "react";
 import { deletePost } from "./DeleteUpdate";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -8,6 +9,20 @@ function GetRoutines(){
     const user_id = localStorage.getItem(`${USER_ID}`)
     const [routines,SetRoutines] = useState([])
     const [routineId, setRoutineId] =  useState('');
+
+
+    const navigate = useNavigate();
+
+    const toActPage = () => {
+        navigate('/addActPage',
+        {
+        state:{Id:{routineId}}
+        })
+    }
+
+
+
+
 async function getRoutines(){
     try{
         const response = await fetch(`http://fitnesstrac-kr.herokuapp.com/api/routines`,{
@@ -27,6 +42,7 @@ async function getRoutines(){
         <div>
             <form onSubmit={async(event)=>{
                 event.preventDefault();
+                
             }}>
                 <button onClick={getRoutines}>Get Routines</button>
                 {
@@ -41,6 +57,21 @@ async function getRoutines(){
                                     <li>Description: {routine.name}</li>
                                     <li>Goal: {routine.goal}</li>
                                     <li>StoreAuthorId{user_id}</li>
+
+                                    <button
+                                    onClick={(e)=>{
+                                        // console.log(routine)
+                                        console.log(routine.id)
+                                        setRoutineId(routine.id)
+                                        console.log(routineId)
+                                        
+                                        if(routineId !== ''){
+                                            toActPage()
+                                        }
+                                    }}
+                                    >Add Activities to this Routine!</button>
+
+
                                    {(routine.creatorId !== user_id) ?
                                    <button onClick={
                                     (event) => {

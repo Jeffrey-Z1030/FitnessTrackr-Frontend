@@ -39,15 +39,15 @@ function GetUsersRoutines(){
                 throw Error(error)
             }
         }}>
-            <button>TEST GETTING USER ROUTINES</button>
+            <button>Get My Routines</button>
             {
                 userRouts.map(userRout =>{
                     return(
                         <div key={userRout.id}>
-                        <h3>User's Routines</h3>
+                        <h3>{userRout.creatorName}'s Routines</h3>
                         <p>Name: {userRout.name}</p>
                         <p>Goal: {userRout.goal}</p>
-                        <p>Creator Name: {userRout.creatorName}</p>
+ 
                         </div>
                     )
                 })

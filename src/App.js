@@ -11,6 +11,8 @@ import { Route, BrowserRouter, Link, Routes } from 'react-router-dom';
 import PostActivitie from './Components/postActivities';
 import PostRoutines from './Components/postRoutines';
 import RoutinePageById from './Components/RoutinesByIdPage';
+import AddActivityToRoutine from './Components/ActToRoutine';
+import DropDown from './Components/DropDown';
 
 const replyToken ='test_token'
 
@@ -54,11 +56,11 @@ function App() {
           <Route path='/userme' element={<UserMe/>}/>
           <Route path='/getusersroutines' element={<GetUsersRoutines/>}/>
           <Route path='/routinepagebyactid' element={<RoutinePageById/>}/>
-
+          <Route path='/addActPage' element={<AddActivityToRoutine/>}/>
           </Routes>
 
           
- 
+          <DropDown/>
      
 
           </div> 
