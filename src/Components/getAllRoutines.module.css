@@ -1,0 +1,20 @@
+.container {
+    border: 1px solid black;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.card {
+    /* border: 1px solid red; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 2px;
+    margin: 10px 2px;
+    width: 20vw;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    background-image: linear-gradient(to left, rgba(255, 0, 0, 0), rgba(255, 0, 0, 1));
+
+}

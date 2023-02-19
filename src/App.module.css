@@ -1,0 +1,15 @@
+/* .App {
+    text-align: center;
+    background-image: url(https://www.wallpaperup.com/uploads/wallpapers/2017/03/26/1083160/c1864ac7017cf8f0c6805d60d1a7cbcb-1000.jpg);
+    height: 100vh
+} */
+
+* {
+    box-sizing: border-box;
+}
+
+.App {
+    border: 1px solid red;
+    color: pink;
+
+}

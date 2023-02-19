@@ -2,6 +2,7 @@ import { getRoutines, USER_ID } from "../API/AccountReq";
 import { useEffect, useState } from "react";
 import { deletePost } from "./DeleteUpdate";
 import RoutineEditForm from "./RoutineEditForm";
+import styles from "./getAllRoutines.module.css"
 
 
 
@@ -40,7 +41,7 @@ function GetRoutines() {
 
 
     return (
-        <div>
+        <div className={styles.container}>
             {
                 routines.map((routine) => {
 
@@ -48,7 +49,7 @@ function GetRoutines() {
 
                     return (
 
-                        <div className="card" key={routine.id}>
+                        <div className={styles.card} key={routine.id}>
                             <h3>Routine</h3>
                             <ul className="container">
                                 <li>CreatorId: {routine.creatorId}</li>
