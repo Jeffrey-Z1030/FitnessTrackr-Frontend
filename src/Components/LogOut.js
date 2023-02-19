@@ -10,6 +10,7 @@ function LogOut(){
           localStorage.clear('TOKEN_STORAGE_KEY')
           setToken('');
           alert('You have been logged off')
+          window.location.reload()
         }
       }>Log Out</button>
     )

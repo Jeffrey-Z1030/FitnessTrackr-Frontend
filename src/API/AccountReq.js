@@ -117,20 +117,25 @@ export async function UserNameRoutines(){
 //     }
 // }
 
-export async function patchActivitieByID(props){
+export async function patchActivitieByID(name, description, activitieId){
     try{
-        const activitieId = props.id
-              
+        
+        const userToken = localStorage.getItem(`replyToken`)
+        console.log('activitie id is:', activitieId)
+
         const response = await fetch(`http://fitnesstrac-kr.herokuapp.com/api/activities/${activitieId}`,{
-            method:"PATCH",
+            method:"PATCH",   
+            headers:{
+                'Content-Type' : 'application/json' ,
+                'Authorization' : `Bearer ${userToken}`
+            },
             body:JSON.stringify({
-                name: props.name,
-                description: props.description
+                name: name,
+                description: description,
             })
         }).then(response => response.json()).then(result => {
             console.log(result)
         })
-        
     }catch(error){
         throw Error(error)
     }

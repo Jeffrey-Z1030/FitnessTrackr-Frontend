@@ -1,7 +1,14 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useLocation } from "react-router-dom"
 
 function AddActivityToRoutine(){
+
+    window.onload = (event) => {
+        console.log("page is fully loaded")
+        console.log(routineId)
+        GetAllActivities();
+        ;
+      };
 
 
     const [count,setCount] = useState('')
@@ -25,6 +32,9 @@ function AddActivityToRoutine(){
 
     const routineId = location.state.Id.routineId
 
+    const giveaNumber = parseInt(count)
+    const giveanotherNumber = parseInt(duration)
+
 
     function DropDown(){
 
@@ -47,7 +57,7 @@ function AddActivityToRoutine(){
                         {activities.map((activity)=>{
                             return(
                                 
-                                    <li onClick={(e)=>{
+                                    <li key={activity.id} onClick={(e)=>{
                                         console.log(activity.id)
                                         setActId(activity.id)
                                     }}>{activity.name}</li>
@@ -82,6 +92,7 @@ function AddActivityToRoutine(){
             console.log(json)
             setActivities(json)
             
+            
             ;
 
             // return json;
@@ -92,13 +103,14 @@ function AddActivityToRoutine(){
 
 
     async function PostCall(){
+            
         try{
             const response = await fetch(`http://fitnesstrac-kr.herokuapp.com/api/routines/${routineId}/activities`,{
-                Method:"POST",
-                Body: JSON.stringify({
-                    activityId,
-                    count,
-                    duration,
+                method:"POST",
+                body: JSON.stringify({
+                    activityId:activityId,
+                    count:giveaNumber,
+                    duration:giveanotherNumber
                 })
             }).then(response => response.json()).then(result => {
                 console.log(result)
@@ -118,25 +130,35 @@ function AddActivityToRoutine(){
         }}>
 
             <DropDown/>
-            <button onClick={GetAllActivities}>Test</button>
+   
             <button onClick={(e)=>{
-                console.log(location.state.Id.routineId)
-                console.log(routineId)
-                console.log(activities)
+                // console.log(location.state.Id.routineId)
+                // console.log(routineId)
+                // console.log(activities)
+                // console.log(activityId)
             }}>Location</button>
             <h3>Hello</h3>
 
+
             <input 
+            type='number'
             placeholder="Count"
             onChange={handleCount}
             value={count}>
             </input>
             <input 
+            type='number'
             placeholder="Duration"
             onChange={handleDuration}
             value={duration}>
             </input>
-            <button onClick={PostCall}>Submit</button>
+            <button onClick={(e)=>{
+                console.log(giveaNumber)
+                console.log(typeof(giveaNumber))
+                PostCall()
+
+                console.log(activityId)
+            }}>Submit</button>
         </form>
     )
 }

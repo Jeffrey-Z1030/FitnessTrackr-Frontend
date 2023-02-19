@@ -1,5 +1,6 @@
 import { useState, useEffect} from 'react';
 import {LoginAccount} from '../API/AccountReq';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -9,7 +10,7 @@ function Login(){
 
     const setCredentials = async () => {
         await LoginAccount({ username, password });
-        // window.location.reload()
+        window.location.reload()
     }
 
     const setTargetValue = (cb) => {
@@ -17,6 +18,12 @@ function Login(){
           cb(event.target.value)
         }
       }
+
+    const navigate = useNavigate();
+
+
+
+    
       
       
 
@@ -28,6 +35,8 @@ function Login(){
                         setCredentials()
                         SetUsername('')
                         SetPassword('')
+   
+                
                     }}>
                 <h3>Login</h3>
                 <input 

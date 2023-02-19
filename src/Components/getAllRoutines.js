@@ -1,91 +1,105 @@
 import { getRoutines, USER_ID } from "../API/AccountReq";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { deletePost } from "./DeleteUpdate";
-import { useNavigate } from "react-router-dom";
+import RoutineEditForm from "./RoutineEditForm";
 
 
 
-function GetRoutines(){
+
+function GetRoutines() {
     const user_id = localStorage.getItem(`${USER_ID}`)
-    const [routines,SetRoutines] = useState([])
-    const [routineId, setRoutineId] =  useState('');
+    const [editState, setEditState] = useState(false)
+    const [routines, SetRoutines] = useState([])
+    const [routineId, setRoutineId] = useState('');
+    const [activityChange, setActivityChange] = useState(false)
 
+    async function getRoutines() {
+        try {
+            const response = await fetch(`http://fitnesstrac-kr.herokuapp.com/api/routines`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
 
-    const navigate = useNavigate();
-
-    const toActPage = () => {
-        navigate('/addActPage',
-        {
-        state:{Id:{routineId}}
-        })
+            const json = await response.json()
+            console.log(json);
+            return json;
+        } catch (error) {
+            throw Error(error)
+        }
     }
 
+    useEffect(() => {
+        const getRoutinesAsync = async () => {
+            const routines = await getRoutines();
+            SetRoutines(routines)
+        }
+        getRoutinesAsync();
+        setActivityChange(false)
+    }, [activityChange])
 
 
-
-async function getRoutines(){
-    try{
-        const response = await fetch(`http://fitnesstrac-kr.herokuapp.com/api/routines`,{
-            headers:{
-                'Content-Type':'application/json',
-                    },
-        }).then(response => response.json()).then(result => {
-            console.log(result)
-            SetRoutines(result)
-
-        })
-    }catch(error){
-        throw Error(error)
-    }
-}
-    return(
+    return (
         <div>
-            <form onSubmit={async(event)=>{
-                event.preventDefault();
-                
-            }}>
-                <button onClick={getRoutines}>Get Routines</button>
-                {
-                    routines.map((routine)=>{
-                        return(
-                            
-                            <div className="card" key={routine.id}>
-                                <h3>Routine</h3>
-                                <ul className="container">
-                                    <li>{routine.creatorId}</li>
-                                    <li>Name: {routine.creatorName}</li>
-                                    <li>Description: {routine.name}</li>
-                                    <li>Goal: {routine.goal}</li>
-                                    <li>StoreAuthorId{user_id}</li>
+            {
+                routines.map((routine) => {
 
-                                    <button
-                                    onClick={(e)=>{
-                                        // console.log(routine)
-                                        console.log(routine.id)
-                                        setRoutineId(routine.id)
-                                        console.log(routineId)
-                                        
-                                        if(routineId !== ''){
-                                            toActPage()
+
+
+                    return (
+
+                        <div className="card" key={routine.id}>
+                            <h3>Routine</h3>
+                            <ul className="container">
+                                <li>CreatorId: {routine.creatorId}</li>
+                                <li>Data Type: {typeof (routine.creatorId)}</li>
+                                <li>Name: {routine.creatorName}</li>
+                                <li>Description: {routine.name}</li>
+                                <li>Goal: {routine.goal}</li>
+                                <br></br>
+                                <li>StoredAuthorId{user_id}</li>
+                                <li>Data Type: {typeof (user_id)}</li>
+
+                                {(routine.creatorId == user_id) ?
+                                    <button onClick={
+                                        (event) => {
+                                            setRoutineId(routine.id);
+                                            console.log(routineId)
+                                            deletePost(routineId);
                                         }
-                                    }}
-                                    >Add Activities to this Routine!</button>
+                                    }>Delete</button> : null}
 
+                                {(routine.creatorId == user_id) ?
+                                    <button onClick={
+                                        (event) => {
+                                            setRoutineId(routine.id);
+                                            setEditState(true)
+                                            console.log('routine id is:', routineId)
 
-                                   {(routine.creatorId !== user_id) ?
-                                   <button onClick={
-                                    (event) => {
-                                        setRoutineId(routine.id);
-                                        console.log(routineId)
-                                        deletePost(routineId);
-                                    }
-                                    }>Delete</button>:null}
-                                </ul>
-                            </div>
-                        )
-                    })
-                }
-            </form>
+                                        }
+                                    }>Edit</button> : null}
+                            </ul>
+
+                            {
+                                editState ?
+
+                                    <RoutineEditForm
+                                        routineId={routineId}
+                                        name={routine.name}
+                                        goal={routine.goal}
+                                        isPublic={routine.isPublic}
+                                    />
+
+                                    :
+
+                                    null
+
+                            }
+                        </div>
+                    )
+                })
+            }
+
         </div>
     )
 }

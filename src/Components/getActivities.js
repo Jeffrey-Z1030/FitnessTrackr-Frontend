@@ -2,7 +2,7 @@ import { getActivityIdR, GetAllActivities } from "../API/AccountReq";
 import { useState, useEffect } from "react";
 // import ActIdRoutine from "./activityIdByRoutine";
 import { patchActivitieByID } from "../API/AccountReq";
-import EditForm from "./EditForm";
+import ActEditForm from "./ActEditForm";
 import { Link, Route, Router, useNavigate } from "react-router-dom";
 import { test } from "../Constants/frankenstein";
 
@@ -103,7 +103,7 @@ function GetActivities() {
     }
 
     return (
-        <div>
+        <div className='act'>
             {
                 activities.map((activitie) => {
                     return (
@@ -192,15 +192,15 @@ function GetActivities() {
 
                                 }}>Test</button>
 
-                            <button
+                                <button
                                 onClick={(e) => {
                                     SetEdit(true);
-                                    // patchActivitieByID()
+                                    setActivityId(activitie.id)
                                 }
                                 }>Edit</button>
                             {
                                 edit ?
-                                    <EditForm
+                                    <ActEditForm
                                         activitieId={activityId}
                                         name={activitie.name}
                                         description={activitie.description}

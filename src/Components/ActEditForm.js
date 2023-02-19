@@ -1,7 +1,8 @@
 import { setTargetValue } from "../Constants/constants";
 import { useState } from "react";
+import { patchActivitieByID } from "../API/AccountReq";
 
-function EditForm({ activitieId, name, description }) {
+function ActEditForm({ activitieId, name, description }) {
     // const activitieId = props.activitieId
     // const name = props.name
     // const description = props.description
@@ -11,23 +12,29 @@ function EditForm({ activitieId, name, description }) {
 
     return (
         <div>
-            <form>
+            <form onSubmit={(e) => {
+                e.preventDefault()
+            }}>
+
                 <label>Edit Name:
                 </label>
                 <input
+                    placeholder={name}
                     value={editedName}
                     onChange={setTargetValue(setEditedName)}
                 />
                 <label>Edit Description:
                 </label>
                 <input
+                    placeholder={description}
                     value={editedDescription}
                     onChange={setTargetValue(setEditedDescription)}
                 />
-                <button>Send</button>
+                <button
+                    onClick={(e) => { patchActivitieByID(editedName, editedDescription, activitieId) }}>Send</button>
             </form>
         </div>
     )
 }
 
-export default EditForm
+export default ActEditForm

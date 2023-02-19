@@ -19,6 +19,11 @@ const replyToken ='test_token'
 
 function App() {
   const [token,setToken] = useState(localStorage.getItem('replyToken'))
+
+
+  useEffect(()=>{
+    
+  },[token])
    
   
 
@@ -29,19 +34,20 @@ function App() {
       <div className="App">
         <div>
           <ul className="links">
-          <li><Link to='/signup'>SignUp</Link></li>
-          <li><Link to='/login'>Login</Link></li>
+          {(!token)?<li><Link to='/signup'>SignUp</Link></li>:null}
+          {(!token)?<li><Link to='/login'>Login</Link></li>:null}
           <li><Link to='/getactivities'>Activities</Link></li>
           <li><Link to='/getroutines'>Routines</Link></li>
           {(token)? <li><Link to='/postactivitie'>Create Activity</Link></li>:null}
           {(token)?<li><Link to='/postroutines'>Create Routine</Link></li>:null}
-          <li><Link to='/userme'>TestGetMe</Link></li>
-          <li><Link to='/getusersroutines'>Test Get User Routines</Link></li>
+          {(token)?<li><Link to='/userme'>TestGetMe</Link></li>:null}
+          {(token)?<li><Link to='/getusersroutines'>Test Get User Routines</Link></li>:null}
+          {(token) ?<LogOut/> :null}
 
 
     
           </ul>
-          {(token) ?<LogOut/> :null}
+          
           
         </div>
         <h1>Welcome to FitnessTracker</h1>
@@ -60,7 +66,7 @@ function App() {
           </Routes>
 
           
-          <DropDown/>
+
      
 
           </div> 
