@@ -11,6 +11,10 @@ function GetRoutines() {
     const user_id = localStorage.getItem(`${USER_ID}`)
     const [editState, setEditState] = useState(false)
     const [routines, SetRoutines] = useState([])
+    const [routineName, setRoutinenName] = useState('');
+    const [routineGoal, setRoutineGoal] = useState('');
+    const [isPublic, setIsPublic] = useState(null);
+
     const [routineId, setRoutineId] = useState('');
     const [activityChange, setActivityChange] = useState(false)
 
@@ -42,63 +46,65 @@ function GetRoutines() {
 
     return (
         <div className={styles.container}>
+
+
             {
-                routines.map((routine) => {
+                editState
 
+                    ?
 
+                    <RoutineEditForm
+                        routineId={routineId}
+                        name={routineName}
+                        goal={routineGoal}
+                        isPublic={isPublic}
+                        setEditState={setEditState}
+                        setActivityChange={setActivityChange}
+                    />
 
-                    return (
+                    :
 
-                        <div className={styles.card} key={routine.id}>
-                            <h3>Routine</h3>
-                            <ul className="container">
-                                <li>CreatorId: {routine.creatorId}</li>
-                                <li>Data Type: {typeof (routine.creatorId)}</li>
-                                <li>Name: {routine.creatorName}</li>
-                                <li>Description: {routine.name}</li>
-                                <li>Goal: {routine.goal}</li>
-                                <br></br>
-                                <li>StoredAuthorId{user_id}</li>
-                                <li>Data Type: {typeof (user_id)}</li>
+                    routines.map((routine) => {
+                        return (
+                            <div className={styles.card} key={routine.id}>
+                                <h3>Routine</h3>
+                                <ul className="container">
+                                    <li>CreatorId: {routine.creatorId}</li>
+                                    <li>Data Type: {typeof (routine.creatorId)}</li>
+                                    <li>Name: {routine.creatorName}</li>
+                                    <li>Description: {routine.name}</li>
+                                    <li>Goal: {routine.goal}</li>
+                                    <br></br>
+                                    <li>StoredAuthorId{user_id}</li>
+                                    <li>Data Type: {typeof (user_id)}</li>
 
-                                {(routine.creatorId == user_id) ?
-                                    <button onClick={
-                                        (event) => {
-                                            setRoutineId(routine.id);
-                                            console.log(routineId)
-                                            deletePost(routineId);
-                                        }
-                                    }>Delete</button> : null}
+                                    {(routine.creatorId == user_id) ?
+                                        <button
+                                            className={styles.button}
+                                            onClick={
+                                                (event) => {
+                                                    setRoutineId(routine.id);
+                                                    console.log(routineId)
+                                                    deletePost(routineId);
+                                                    setActivityChange(true);
+                                                }
+                                            }>Delete</button> : null}
 
-                                {(routine.creatorId == user_id) ?
-                                    <button onClick={
-                                        (event) => {
-                                            setRoutineId(routine.id);
-                                            setEditState(true)
-                                            console.log('routine id is:', routineId)
+                                    {(routine.creatorId == user_id) ?
+                                        <button
+                                            className={styles.button}
+                                            onClick={
+                                                (event) => {
+                                                    setRoutineId(routine.id);
+                                                    setEditState(true)
+                                                    console.log('routine id is:', routineId)
 
-                                        }
-                                    }>Edit</button> : null}
-                            </ul>
-
-                            {
-                                editState ?
-
-                                    <RoutineEditForm
-                                        routineId={routineId}
-                                        name={routine.name}
-                                        goal={routine.goal}
-                                        isPublic={routine.isPublic}
-                                    />
-
-                                    :
-
-                                    null
-
-                            }
-                        </div>
-                    )
-                })
+                                                }
+                                            }>Edit</button> : null}
+                                </ul>
+                            </div>
+                        )
+                    })
             }
 
         </div>
