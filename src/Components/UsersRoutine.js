@@ -1,58 +1,58 @@
 // import { UserNameRoutines } from "../API/AccountReq";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
-function GetUsersRoutines(){
+function GetUsersRoutines() {
 
-    const [userRouts,SetUserRouts] = useState([])
+    const [userRoutines, setUserRoutines] = useState([])
 
-    async function UserNameRoutines(){
-        try{
+    async function routinesByUser() {
+        try {
             const username = localStorage.getItem('SignedInUser')
-            const response = await fetch(`http://fitnesstrac-kr.herokuapp.com/api/users/${username}/routines`,{
-                headers:{
-                    'Content-Type' : 'application/json',
+            const response = await fetch(`http://fitnesstrac-kr.herokuapp.com/api/users/${username}/routines`, {
+                headers: {
+                    'Content-Type': 'application/json',
                 }
             })
             const json = await response.json();
             console.log(json)
-            SetUserRouts(json)
+            return json
 
-        }catch(error){
+        } catch (error) {
             throw Error("Failed to get user's Routines", error)
         }
     }
-    
 
+    useEffect(() => {
+        const getUserRoutines = async () => {
+            const routines = await routinesByUser();
+            console.log('response routines are', routines)
+            setUserRoutines(routines)
+            // console.log('useState userRoutines are:', userRoutines)
+        }
+        getUserRoutines();
+    }, []);
 
-    
-    return(
-        <form onSubmit={async(event)=>{
-            event.preventDefault();
+    return (
+        <div>
 
-            try{
-                const response = await UserNameRoutines()
-                console.log(userRouts)
-                
-
-            }catch(error){
-                throw Error(error)
-            }
-        }}>
-            <button>Get My Routines</button>
             {
-                userRouts.map(userRout =>{
-                    return(
+                userRoutines.map(userRout => {
+                    return (
                         <div key={userRout.id}>
-                        <h3>{userRout.creatorName}'s Routines</h3>
-                        <p>Name: {userRout.name}</p>
-                        <p>Goal: {userRout.goal}</p>
- 
+                            <h3>{userRout.creatorName}'s Routines</h3>
+                            <p>Name: {userRout.name}</p>
+                            <p>Goal: {userRout.goal}</p>
+
                         </div>
                     )
                 })
-            }       
-        </form>
+            }
+
+
+
+        </div>
+
     )
 }
 
