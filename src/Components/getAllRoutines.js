@@ -1,5 +1,6 @@
 import { getRoutines, USER_ID } from "../API/AccountReq";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { deletePost } from "./DeleteUpdate";
 import RoutineEditForm from "./RoutineEditForm";
 import styles from "./getAllRoutines.module.css"
@@ -17,6 +18,15 @@ function GetRoutines() {
 
     const [routineId, setRoutineId] = useState('');
     const [activityChange, setActivityChange] = useState(false)
+
+    const navigate = useNavigate();
+    const toActPage = () => {
+        navigate('/addActPage', {
+            state: {
+                Id: { routineId }
+            }
+        })
+    }
 
     async function getRoutines() {
         try {
@@ -77,6 +87,13 @@ function GetRoutines() {
                                     <br></br>
                                     <li>StoredAuthorId{user_id}</li>
                                     <li>Data Type: {typeof (user_id)}</li>
+
+                                    <button onClick={(e) => {
+                                        setRoutineId(routine.id)
+                                        console.log(routineId)
+                                        if (routineId !== '') toActPage()
+                                    }}
+                                    >Add Activity to Routine</button>
 
                                     {(routine.creatorId == user_id) ?
                                         <button

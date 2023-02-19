@@ -1,5 +1,5 @@
 import { setTargetValue } from "../Constants/constants";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { patchRoutineByID } from "../API/RoutinesReqs";
 
 function RoutineEditForm({ routineId, routineName, routineGoal, setEditState, setActivityChange }) {
@@ -10,6 +10,12 @@ function RoutineEditForm({ routineId, routineName, routineGoal, setEditState, se
     const [editedName, setEditedName] = useState('');
     const [editedGoal, setEditedGoal] = useState('');
     const [editedPublic, setEditedPublic] = useState(null)
+    const [stateId, setStateId] = useState('')
+
+    useEffect(() => {
+        setStateId(routineId)
+        console.log('stateId is:', stateId)
+    }, []);
 
 
     return (
@@ -36,7 +42,7 @@ function RoutineEditForm({ routineId, routineName, routineGoal, setEditState, se
                 />
                 <button
                     onClick={(e) => {
-                        patchRoutineByID(editedName, editedGoal, editedPublic, routineId)
+                        patchRoutineByID(editedName, editedGoal, editedPublic, stateId)
                     }}>Send</button>
 
                 <button
